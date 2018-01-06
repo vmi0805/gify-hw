@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Gify Viewer</title>
+      <link rel="stylesheet" href="style.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+<div id="button-header">
+    <button type="button" class="all-buttons" text="Goats">Goats</button>
+    <button type="button" class="all-buttons" text="Bears">Bears</button>
+    <button type="button" class="all-buttons" text="Pigs">Pigs</button>
+    <button type="button" class="all-buttons" text="Cats">Cats</button>
+    <button type="button" class="all-buttons" text="Donkeys">Donkeys</button>
+</div>
+
+
+<div class="container">
+  <div class="gify-section"></div>
+
+  <div id="submit-section">
+    <form id="submit-form">
+      Search for any gify: <br>
+      <input type="text" id="search-input-box">
+      <input id="search-input" type="submit" value="gify search">
+    </form>
+  </div>
+
+
+<script type="text/javascript">
+
+// let picData = [];
+
+  $("#search-input").on("click", function(){
+    event.preventDefault();
+
+    $(".gify-section").empty();
+
+    const gify = $("#search-input-box").val().trim();
+
+    const a = $("<button>");
+
+    a.attr("class", "all-buttons");
+    a.attr("text", gify)
+    a.text(gify);
+
+    $("#button-header").append(a);
+
+    const queryURL = "https://api.giphy.com/v1/gifs/search?api_key=gUp3KNDqq5s6g4I8U5Zmh4aqyXFHJU83&q=" + gify + "&limit=10&offset=0&rating=R&lang=en"
+
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).done(function(response) {
+      console.log(response);
+      for (let i=0; i < response.data.length; i++){
+        const thumb = response.data[i].images.fixed_height.url;
+        const pic = $("<img>");
+        pic.attr("src", thumb);
+        pic.attr("class", "gify-images");
+        pic.attr("data-animate", response.data[i].images.fixed_height.url);
+        pic.attr("data-still", response.data[i].images.fixed_height_still.url);
+        pic.attr("data-state", "animate");
+        $(".gify-section").append(pic);
+      }
+    });
+  })
+
+
+$(document.body).on("click", ".all-buttons", function() {
+    event.preventDefault();
+
+    $(".gify-section").empty();
+
+    const gify2 = $(this).text().trim();
+
+    const queryURL = "https://api.giphy.com/v1/gifs/search?api_key=gUp3KNDqq5s6g4I8U5Zmh4aqyXFHJU83&q=" + gify2 + "&limit=10&offset=0&rating=R&lang=en"
+
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).done(function(response) {
+      for (let i=0; i < response.data.length; i++){
+        const thumb = response.data[i].images.fixed_height.url;
+        const pic = $("<img>");
+        pic.attr("src", thumb);
+        pic.attr("class", "gify-images");
+        pic.attr("data-animate", response.data[i].images.fixed_height.url);
+        pic.attr("data-still", response.data[i].images.fixed_height_still.url);
+        pic.attr("data-state", "animate");
+        $(".gify-section").append(pic);
+      }
+    });
+  })
+
+$(document.body).on("click", ".gify-images", function() {
+  const state = $(this).attr("data-state");
+      // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+      // Then, set the image's data-state to animate
+      // Else set src to the data-still value
+      if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+      } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+      }
+})
+
+
+</script>
+
+
+</body>
+
+</html>

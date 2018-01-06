@@ -1,0 +1,52 @@
+#button-header{
+	display: inline-block;
+	border: solid grey 8px;
+	width: 800px;
+	height: auto;
+}
+
+.container{
+	height: 807px;
+	width: 800px;
+	border: solid grey 8px;
+}
+
+.gify-section{
+	display: inline-block;
+	height: 800px;
+	width: 492px;
+	border: solid red 4px;
+	float: left;
+}
+
+#submit-section{
+	display: inline-block;
+	width: 292px;
+	height: 100px;
+	border: solid orange 4px;
+	float: right;
+}
+
+#submit-form{
+	margin-top: 26px;
+	margin-left: 30px;
+}
+
+.all-buttons{
+	height: 40px;
+	width: 60px;
+	color: pink;
+	font-weight: bold;
+	background-color: purple;
+	margin: 4px 4px 4px 4px;
+}
+
+.gify-images{
+	border: red 20px;
+	height: 120px;
+	width: auto;
+	margin: 4px 4px 4px 4px;
+}
+
+
+
